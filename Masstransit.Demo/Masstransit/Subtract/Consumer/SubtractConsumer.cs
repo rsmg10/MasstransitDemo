@@ -15,4 +15,17 @@ public class SubtractConsumer : IConsumer<SubtractMessage>
         });
         return Task.CompletedTask;
     }
+    
+}
+
+class SubtractConsumerDefinition : ConsumerDefinition<SubtractConsumer>
+{
+    protected override void ConfigureConsumer(IReceiveEndpointConfigurator endpointConfigurator, IConsumerConfigurator<SubtractConsumer> consumerConfigurator)
+    {
+        endpointConfigurator.ConfigureConsumeTopology = false;
+        
+        base.ConfigureConsumer(endpointConfigurator, consumerConfigurator);
+    }
+
+ 
 }

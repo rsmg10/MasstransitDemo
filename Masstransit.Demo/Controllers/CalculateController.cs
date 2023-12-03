@@ -1,7 +1,7 @@
 using MassTransit;
+using Masstransit.Demo.Masstransit.Add.Messages;
 using Masstransit.Demo.Masstransit.Subtract.Messages;
-using Microsoft.AspNetCore.Mvc;
-using AddMessage = Masstransit.Demo.Masstransit.Add.Messages.AddMessage;
+using Microsoft.AspNetCore.Mvc; 
 
 namespace Masstransit.Demo.Controllers;
 
