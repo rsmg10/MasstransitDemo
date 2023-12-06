@@ -1,4 +1,4 @@
-namespace StateMachineSample.StateMachine.Settings;
+namespace Masstransit.StateMachine.Shared.Settings;
 
 public class MessageBrokerQueueSettings
 {

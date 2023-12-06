@@ -1,24 +1,37 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using MassTransit;
+using Masstransit.StateMachine.Host.Consumers;
+using Masstransit.StateMachine.Host.Saga;
+using Microsoft.Extensions.Hosting;
 
-using MassTransit;
-using Masstransit.StateMachine.Host;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
 
-var builder = WebApplication.CreateBuilder();
-
-builder.Services.AddHostedService<MonitorKeyboardBackgroundService>();
-
-builder.Services.AddMassTransit(x =>
-{
-    x.UsingInMemory((context, cfg) =>
+Host.CreateDefaultBuilder(args)
+    .ConfigureServices((hostContext, services) =>
     {
-        cfg.ConfigureEndpoints(context);
-    });
-});
-
-var app = builder.Build();
-
-app.Run();
-
-Console.WriteLine("Hello, World!");
+        services.AddMassTransit(x =>
+        {
+            x.AddConsumer<OrderSubmittedConsumer>();
+            x.AddRequestClient<OrderSubmittedConsumer>();
+            x.AddConsumer<OrderAcceptedConsumer>();
+            x.AddRequestClient<OrderAcceptedConsumer>();
+            x.AddSagaStateMachine<OrderStateMachine, OrderStateInstance>()
+                .InMemoryRepository();
+            //     .MongoDbRepository(r =>
+            // {
+            //     r.Connection = messageBrokerPersistenceSettings.Connection;
+            //     r.DatabaseName = messageBrokerPersistenceSettings.DatabaseName;
+            //     r.CollectionName = messageBrokerPersistenceSettings.CollectionName;
+            // });
+            
+            x.UsingRabbitMq((context, cfg) =>
+            {
+                cfg.Host("localhost", "/", h =>
+                {
+                    h.Username("guest");
+                    h.Password("guest");
+                });
+                cfg.ConfigureEndpoints(context);
+            });
+            
+            services.AddMassTransitHostedService();
+        });
+    }).Build().Run();

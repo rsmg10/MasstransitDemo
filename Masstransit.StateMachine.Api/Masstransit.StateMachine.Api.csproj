@@ -14,8 +14,9 @@
         <PackageReference Include="MassTransit.MongoDb" Version="8.0.8" />
     </ItemGroup>
 
-<!--    <ItemGroup>-->
-<!--      <ProjectReference Include="..\Masstransit.StateMachine.Shared\Masstransit.StateMachine.Shared.csproj" />-->
-<!--    </ItemGroup>-->
+    <ItemGroup>
+<!--      <ProjectReference Include="..\Masstransit.StateMachine.Host\Masstransit.StateMachine.Host.csproj" />-->
+      <ProjectReference Include="..\Masstransit.StateMachine.Shared\Masstransit.StateMachine.Shared.csproj" />
+    </ItemGroup>
 
 </Project>

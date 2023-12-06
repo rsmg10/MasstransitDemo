@@ -1,5 +1,5 @@
 ﻿using MassTransit;
-using Masstransit.StateMachine.Host.Events;
+using Masstransit.StateMachine.Shared.Events;
 
 namespace Masstransit.StateMachine.Host.Consumers;
 
